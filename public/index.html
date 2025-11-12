@@ -6,26 +6,28 @@
     <title>Asosiy sahifa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZWQTXMJSL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZWQTXMJSL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-3ZWQTXMJSL');
-</script>
+      gtag('config', 'G-3ZWQTXMJSL');
+    </script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'teal-gold': {
+                        'navy-gold': {
                             50: '#ecfdf5',
                             500: '#14b8a6',
                             600: '#0d9488',
                             700: '#0f766e'
                         },
-                        'gold-accent': '#f59e0b'
+                        'gold-accent': '#f59e0b',
+                        'charcoal': '#374151',
+                        'silver': '#f3f4f6'
                     },
                     animation: {
                         'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
@@ -65,22 +67,22 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-teal-gold-50 to-gray-50">
+<body class="min-h-screen bg-gradient-to-br from-navy-gold-50 to-gray-50">
     <!-- Header -->
-    <header class="bg-teal-600 text-white shadow-lg fixed w-full top-0 z-50 transition-all duration-300">
+    <header class="bg-navy-gold-600 text-white shadow-lg fixed w-full top-0 z-50 transition-all duration-300">
         <nav class="flex justify-between items-center p-4 max-w-7xl mx-auto">
             <div class="nav-brand flex items-center gap-2">
                 <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center gold-glow">
-                    <span class="text-xs font-bold text-teal-gold-500">H</span>
+                    <span class="text-xs font-bold text-navy-gold-500">E</span>
                 </div>
                 <h2 class="text-xl md:text-2xl font-bold brand-text">E-Advokatura</h2>
             </div>
             <div class="nav-links hidden md:flex space-x-6">
-                <a href="/index" class="hover:text-teal-200 transition-colors px-2 py-1 rounded">Asosiy</a>
-                <a href="/lawyer" class="hover:text-teal-200 transition-colors px-2 py-1 rounded">Advokatlar</a>
-                <a href="/chatbot" class="hover:text-teal-200 transition-colors px-2 py-1 rounded">Chatbot</a>
-                <a href="/create" class="hover:text-teal-200 transition-colors px-2 py-1 rounded">Post yaratish</a>
-                <a href="/profile" class="hover:text-teal-200 transition-colors px-2 py-1 rounded">Profil</a>
+                <a href="/index" class="hover:text-navy-gold-200 transition-colors px-2 py-1 rounded">Asosiy</a>
+                <a href="/lawyer" class="hover:text-navy-gold-200 transition-colors px-2 py-1 rounded">Advokatlar</a>
+                <a href="/chatbot" class="hover:text-navy-gold-200 transition-colors px-2 py-1 rounded">Chatbot</a>
+                <a href="/create" class="hover:text-navy-gold-200 transition-colors px-2 py-1 rounded">Post yaratish</a>
+                <a href="/profile" class="hover:text-navy-gold-200 transition-colors px-2 py-1 rounded">Profil</a>
                 <a href="#" id="logoutBtn" class="bg-gold-accent hover:bg-amber-500 px-4 py-2 rounded transition-colors">Chiqish</a>
             </div>
             <!-- Mobile menu button -->
@@ -91,12 +93,12 @@
             </button>
         </nav>
         <!-- Mobile menu -->
-        <div id="mobileMenu" class="md:hidden hidden bg-teal-700 px-4 py-2 space-y-2">
-            <a href="/index" class="block hover:bg-teal-600 px-3 py-2 rounded">Asosiy</a>
-            <a href="/lawyer" class="block hover:bg-teal-600 px-3 py-2 rounded">Advokatlar</a>
-            <a href="/chatbot" class="block hover:bg-teal-600 px-3 py-2 rounded">Chatbot</a>
-            <a href="/create" class="block hover:bg-teal-600 px-3 py-2 rounded">Post yaratish</a>
-            <a href="/profile" class="block hover:bg-teal-600 px-3 py-2 rounded">Profil</a>
+        <div id="mobileMenu" class="md:hidden hidden bg-navy-gold-700 px-4 py-2 space-y-2">
+            <a href="/index" class="block hover:bg-navy-gold-600 px-3 py-2 rounded">Asosiy</a>
+            <a href="/lawyer" class="block hover:bg-navy-gold-600 px-3 py-2 rounded">Advokatlar</a>
+            <a href="/chatbot" class="block hover:bg-navy-gold-600 px-3 py-2 rounded">Chatbot</a>
+            <a href="/create" class="block hover:bg-navy-gold-600 px-3 py-2 rounded">Post yaratish</a>
+            <a href="/profile" class="block hover:bg-navy-gold-600 px-3 py-2 rounded">Profil</a>
             <a href="#" id="mobileLogout" class="block bg-gold-accent hover:bg-amber-500 px-3 py-2 rounded text-center">Chiqish</a>
         </div>
     </header>
@@ -108,15 +110,15 @@
         <!-- Search Section -->
         <div class="search-section flex flex-col md:flex-row gap-4 mb-8 bg-white p-4 rounded-xl shadow-md gold-glow">
             <input type="text" id="searchInput" placeholder="Postlar qidirish..." 
-                   class="flex-1 p-3 border border-teal-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-            <select id="categoryFilter" class="p-3 border border-teal-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
+                   class="flex-1 p-3 border border-navy-gold-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-gold-500 focus:border-transparent transition-all">
+            <select id="categoryFilter" class="p-3 border border-navy-gold-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-gold-500">
                 <option value="">Barcha kategoriyalar</option>
                 <option value="huquq">Huquq</option>
                 <option value="shartnoma">Shartnoma</option>
                 <option value="nizo">Nizo</option>
                 <option value="maslahat">Maslahat</option>
             </select>
-            <button onclick="searchPosts()" class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-semibold transition-all animate-pulse-slow">Qidirish</button>
+            <button onclick="searchPosts()" class="bg-navy-gold-600 hover:bg-navy-gold-700 text-white px-6 py-3 rounded-lg font-semibold transition-all animate-pulse-slow">Qidirish</button>
         </div>
 
         <!-- Posts Container -->
@@ -126,8 +128,8 @@
 
         <!-- Loading Spinner -->
         <div id="loading" class="hidden text-center py-8">
-            <div class="inline-block animate-spin-slow rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
-            <p class="text-teal-600 mt-2">Yuklanmoqda...</p>
+            <div class="inline-block animate-spin-slow rounded-full h-8 w-8 border-b-2 border-navy-gold-600"></div>
+            <p class="text-navy-gold-600 mt-2">Yuklanmoqda...</p>
         </div>
 
         <!-- Load More Trigger -->
@@ -145,6 +147,7 @@
     </div>
 
     <script>
+        const API_BASE = 'https://your-advokatura-backend.onrender.com'; // Backend URL'ini o'zingiznikiga o'zgartiring
         let currentUser = null;
         let posts = [];
         let currentPage = 1;
@@ -159,7 +162,7 @@
             const userData = localStorage.getItem('user');
             
             if (!token || !userData) {
-                window.location.href = '/';
+                window.location.href = 'register-login.html';
                 return;
             }
             
@@ -167,6 +170,7 @@
             await loadPosts(1, '', '');
             setupInfiniteScroll();
             setupMobileMenu();
+            setupModalEvents(); // Modal eventlarini o'rnatish
         });
 
         // Infinite Scroll o'rnatish
@@ -189,7 +193,7 @@
 
             try {
                 const token = localStorage.getItem('token');
-                let url = `/api/posts?page=${page}&limit=6&search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}`;
+                let url = `${API_BASE}/api/posts?page=${page}&limit=6&search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}`;
                 
                 const response = await fetch(url, {
                     headers: {
@@ -210,11 +214,19 @@
                         displayPostsWithAnimation(newPosts);
                     }
                 } else {
+                    // Agar 401 bo'lsa, token muddati tugagan, chiqish
+                    if (response.status === 401) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('user');
+                        window.location.href = 'register-login.html';
+                        return;
+                    }
                     throw new Error('Postlarni yuklab bo\'lmadi');
                 }
             } catch (error) {
                 console.error('Xatolik:', error);
-                alert('Postlarni yuklab bo\'lmadi');
+                // Xatolikni konsolda ko'rsatish uchun alert o'rniga console.log ishlatish, sahifa yangilanmasin
+                console.log('Postlarni yuklab bo\'lmadi: ', error.message);
                 hasMore = false;
             } finally {
                 isLoading = false;
@@ -257,13 +269,13 @@
             setTimeout(() => postElement.classList.remove('opacity-0'), 10);
         }
 
-                // Post elementini yaratish
+        // Post elementini yaratish
         function createPostElement(post) {
             const postElement = document.createElement('div');
             postElement.className = 'post-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in-up';
             postElement.innerHTML = `
                 <div class="post-header flex items-center gap-3 p-4 bg-gradient-to-r from-navy-gold-50 to-silver">
-                    <img src="${post.author.profile.avatar || 'default.png'}" 
+                    <img src="/uploads/avatars/${post.author.profile.avatar || 'default.png'}" 
                          alt="Avatar" class="avatar w-10 h-10 rounded-full object-cover cursor-pointer hover:scale-105 transition-transform"
                          onclick="viewProfile('${post.author._id}')">
                     <div>
@@ -271,7 +283,7 @@
                         <small class="text-navy-gold-600">@${post.author.username}</small>
                     </div>
                 </div>
-                ${post.image ? `<img src="${post.image}" class="post-image w-full h-48 object-cover cursor-pointer hover:brightness-105 transition-all">` : ''}
+                ${post.image ? `<img src="/uploads/posts/${post.image}" class="post-image w-full h-48 object-cover cursor-pointer hover:brightness-105 transition-all">` : ''}
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-charcoal mb-2">${post.title}</h3>
                     <p class="text-gray-600 mb-4 line-clamp-3">${post.content}</p>
@@ -307,7 +319,7 @@
         async function toggleLike(postId) {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch(`/api/posts/${postId}/like`, {
+                const response = await fetch(`${API_BASE}/api/posts/${postId}/like`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -318,6 +330,10 @@
                 if (response.ok) {
                     const result = await response.json();
                     await loadPosts(currentPage, searchTerm, categoryFilter, currentPage > 1); // Yangilash
+                } else if (response.status === 401) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    window.location.href = 'register-login.html';
                 }
             } catch (error) {
                 console.error('Xatolik:', error);
@@ -334,48 +350,48 @@
             
             details.innerHTML = `
                 <div class="post-full">
-                    <div class="post-header flex items-center gap-3 p-4 bg-gradient-to-r from-teal-50 to-teal-100 mb-4 rounded-lg">
-                        <img src="${post.author.profile.avatar || 'default.png'}" 
+                    <div class="post-header flex items-center gap-3 p-4 bg-gradient-to-r from-navy-gold-50 to-silver mb-4 rounded-lg">
+                        <img src="/uploads/avatars/${post.author.profile.avatar || 'default.png'}" 
                              alt="Avatar" class="avatar w-12 h-12 rounded-full object-cover cursor-pointer hover:scale-105"
                              onclick="viewProfile('${post.author._id}')">
                         <div>
-                            <h4 class="font-semibold text-gray-800 text-lg">${post.author.profile.firstName} ${post.author.profile.lastName}</h4>
-                            <small class="text-teal-600">@${post.author.username}</small>
+                            <h4 class="font-semibold text-charcoal text-lg">${post.author.profile.firstName} ${post.author.profile.lastName}</h4>
+                            <small class="text-navy-gold-600">@${post.author.username}</small>
                         </div>
                     </div>
-                    ${post.image ? `<img src="${post.image}" class="post-image w-full h-64 object-cover rounded-lg mb-4 cursor-pointer hover:brightness-105">` : ''}
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">${post.title}</h3>
+                    ${post.image ? `<img src="/uploads/posts/${post.image}" class="post-image w-full h-64 object-cover rounded-lg mb-4 cursor-pointer hover:brightness-105">` : ''}
+                    <h3 class="text-2xl font-bold text-charcoal mb-3">${post.title}</h3>
                     <p class="text-gray-700 mb-6 leading-relaxed">${post.content}</p>
                     
                     <div class="comments-section">
-                        <h4 class="text-xl font-semibold text-gray-800 mb-4">Kommentariyalar (${post.comments.length})</h4>
+                        <h4 class="text-xl font-semibold text-charcoal mb-4">Kommentariyalar (${post.comments.length})</h4>
                         <div class="comment-form flex gap-3 mb-6 p-3 bg-gray-50 rounded-lg">
-                            <input type="text" id="commentText" placeholder="Kommentariya qo'shish..." class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
-                            <button onclick="addComment('${post._id}')" class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-semibold transition-all">Yuborish</button>
+                            <input type="text" id="commentText" placeholder="Kommentariya qo'shish..." class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-gold-500">
+                            <button onclick="addComment('${post._id}')" class="bg-navy-gold-600 hover:bg-navy-gold-700 text-white px-6 py-3 rounded-lg font-semibold transition-all">Yuborish</button>
                         </div>
                         <div class="comments-list space-y-4">
                             ${post.comments.map(comment => `
                                 <div class="comment bg-white p-4 rounded-lg shadow-sm border border-gray-200">
                                     <div class="comment-header flex items-center gap-3 mb-2">
-                                        <img src="${comment.user.profile.avatar || 'default.png'}" 
+                                        <img src="/uploads/avatars/${comment.user.profile.avatar || 'default.png'}" 
                                              alt="Avatar" class="avatar-small w-8 h-8 rounded-full object-cover cursor-pointer"
                                              onclick="viewProfile('${comment.user._id}')">
                                         <div>
-                                            <strong class="text-gray-800">${comment.user.profile.firstName} ${comment.user.profile.lastName}</strong>
+                                            <strong class="text-charcoal">${comment.user.profile.firstName} ${comment.user.profile.lastName}</strong>
                                             <small class="text-gray-500 ml-2">${new Date(comment.createdAt).toLocaleDateString()}</small>
                                         </div>
                                     </div>
                                     <p class="text-gray-700 mb-3">${comment.text}</p>
-                                    <button onclick="showReplyForm('${post._id}', '${comment._id}')" class="text-teal-600 hover:text-teal-700 text-sm font-medium transition-colors">Javob berish</button>
+                                    <button onclick="showReplyForm('${post._id}', '${comment._id}')" class="text-navy-gold-600 hover:text-navy-gold-700 text-sm font-medium transition-colors">Javob berish</button>
                                     
                                     <div class="replies mt-4 ml-8 space-y-2">
                                         ${comment.replies.map(reply => `
                                             <div class="reply bg-gray-50 p-3 rounded-md">
                                                 <div class="comment-header flex items-center gap-2 mb-1">
-                                                    <img src="${reply.user.profile.avatar || 'default.png'}" 
+                                                    <img src="/uploads/avatars/${reply.user.profile.avatar || 'default.png'}" 
                                                          alt="Avatar" class="avatar-small w-6 h-6 rounded-full object-cover cursor-pointer"
                                                          onclick="viewProfile('${reply.user._id}')">
-                                                    <strong class="text-sm text-gray-800">${reply.user.profile.firstName} ${reply.user.profile.lastName}</strong>
+                                                    <strong class="text-sm text-charcoal">${reply.user.profile.firstName} ${reply.user.profile.lastName}</strong>
                                                     <small class="text-gray-500 text-xs">${new Date(reply.createdAt).toLocaleDateString()}</small>
                                                 </div>
                                                 <p class="text-sm text-gray-700">${reply.text}</p>
@@ -384,8 +400,8 @@
                                     </div>
                                     
                                     <div id="replyForm-${comment._id}" class="reply-form mt-3 hidden flex gap-2">
-                                        <input type="text" id="replyText-${comment._id}" placeholder="Javob yozish..." class="flex-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500">
-                                        <button onclick="addReply('${post._id}', '${comment._id}')" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded transition-all">Yuborish</button>
+                                        <input type="text" id="replyText-${comment._id}" placeholder="Javob yozish..." class="flex-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-navy-gold-500">
+                                        <button onclick="addReply('${post._id}', '${comment._id}')" class="bg-navy-gold-600 hover:bg-navy-gold-700 text-white px-4 py-2 rounded transition-all">Yuborish</button>
                                     </div>
                                 </div>
                             `).join('')}
@@ -396,6 +412,31 @@
             
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden'; // Scroll bloklash
+            // Modal ochilganda close event qo'shish
+            const closeBtn = details.querySelector('.close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeModal);
+            }
+        }
+
+        // Modal yopish
+        function closeModal() {
+            const modal = document.getElementById('postModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Dokument bo'ylab modal tashqarisini bosganda yopish
+        document.addEventListener('click', (e) => {
+            const modal = document.getElementById('postModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Modal eventlarini o'rnatish (umumiy)
+        function setupModalEvents() {
+            // Bu yerda qo'shimcha eventlar bo'lishi mumkin
         }
 
         // Kommentariya qo'shish
@@ -405,7 +446,7 @@
 
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch(`/api/posts/${postId}/comment`, {
+                const response = await fetch(`${API_BASE}/api/posts/${postId}/comment`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -418,6 +459,10 @@
                     document.getElementById('commentText').value = '';
                     await loadPosts(currentPage, searchTerm, categoryFilter, currentPage > 1);
                     showComments(postId); // Yangilash
+                } else if (response.status === 401) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    window.location.href = 'register-login.html';
                 }
             } catch (error) {
                 console.error('Xatolik:', error);
@@ -437,7 +482,7 @@
 
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch(`/api/posts/${postId}/comment/${commentId}/reply`, {
+                const response = await fetch(`${API_BASE}/api/posts/${postId}/comment/${commentId}/reply`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -450,6 +495,10 @@
                     document.getElementById(`replyText-${commentId}`).value = '';
                     await loadPosts(currentPage, searchTerm, categoryFilter, currentPage > 1);
                     showComments(postId); // Yangilash
+                } else if (response.status === 401) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    window.location.href = 'register-login.html';
                 }
             } catch (error) {
                 console.error('Xatolik:', error);
@@ -475,8 +524,11 @@
                     url: shareUrl
                 });
             } else {
-                navigator.clipboard.writeText(shareUrl);
-                alert('Havola nusxalandi!');
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert('Havola nusxalandi!');
+                }).catch(() => {
+                    alert('Havola nusxalanmadi!');
+                });
             }
         }
 
@@ -487,31 +539,20 @@
             loadPosts(1, searchTerm, categoryFilter, false);
         }
 
-        // Modal yopish
-        document.addEventListener('click', (e) => {
-            const modal = document.getElementById('postModal');
-            if (e.target === modal) {
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }
-        });
-        document.querySelector('.close').addEventListener('click', () => {
-            document.getElementById('postModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        });
-
         // Chiqish
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
+        function logout() {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            window.location.href = '/';
+            window.location.href = 'register-login.html';
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
         });
         document.getElementById('mobileLogout').addEventListener('click', (e) => {
             e.preventDefault();
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.href = '/';
+            logout();
         });
 
         // Mobile menu
@@ -527,14 +568,14 @@
         const urlParams = new URLSearchParams(window.location.search);
         const postId = urlParams.get('post');
         if (postId) {
-            // Postni topish va modalni ochish
-            setTimeout(async () => {
+            // Postni topish va modalni ochish (await bilan)
+            (async () => {
                 await loadPosts(1, '', ''); // Dastlab yuklash
                 const post = posts.find(p => p._id === postId);
                 if (post) {
                     showComments(postId);
                 }
-            }, 1500);
+            })();
         }
     </script>
 </body>
