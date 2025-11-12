@@ -132,6 +132,11 @@
             <p class="text-navy-gold-600 mt-2">Yuklanmoqda...</p>
         </div>
 
+        <!-- Error Message -->
+        <div id="errorMessage" class="hidden text-center py-8 text-red-600">
+            <p>Xatolik yuz berdi. Iltimos, sahifani qayta yuklang.</p>
+        </div>
+
         <!-- Load More Trigger -->
         <div id="loadMoreTrigger" class="h-20"></div>
     </main>
@@ -147,7 +152,7 @@
     </div>
 
     <script>
-        const API_BASE = 'https://your-advokatura-backend.onrender.com'; // Backend URL'ini o'zingiznikiga o'zgartiring
+        const API_BASE = 'https://your-advokatura-backend.onrender.com'; // Backend URL'ini o'zingiznikiga o'zgartiring (masalan, https://e-advokatura.onrender.com)
         let currentUser = null;
         let posts = [];
         let currentPage = 1;
@@ -166,11 +171,17 @@
                 return;
             }
             
-            currentUser = JSON.parse(userData);
-            await loadPosts(1, '', '');
-            setupInfiniteScroll();
-            setupMobileMenu();
-            setupModalEvents(); // Modal eventlarini o'rnatish
+            try {
+                currentUser = JSON.parse(userData);
+                console.log('Current user:', currentUser); // Debug uchun
+                await loadPosts(1, '', '');
+                setupInfiniteScroll();
+                setupMobileMenu();
+                setupModalEvents(); // Modal eventlarini o'rnatish
+            } catch (error) {
+                console.error('Sahifa yuklashda xatolik:', error);
+                showError(true);
+            }
         });
 
         // Infinite Scroll o'rnatish
@@ -190,10 +201,15 @@
             if (isLoading) return;
             isLoading = true;
             showLoading(true);
+            showError(false);
 
             try {
                 const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('Token topilmadi');
+                }
                 let url = `${API_BASE}/api/posts?page=${page}&limit=6&search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}`;
+                console.log('API URL:', url); // Debug uchun
                 
                 const response = await fetch(url, {
                     headers: {
@@ -201,8 +217,11 @@
                     }
                 });
                 
+                console.log('Response status:', response.status); // Debug uchun
+                
                 if (response.ok) {
                     const newPosts = await response.json();
+                    console.log('Yuklangan postlar:', newPosts); // Debug uchun
                     hasMore = newPosts.length === 6; // Agar to'liq limit bo'lmasa, tugagan
 
                     if (append) {
@@ -221,12 +240,11 @@
                         window.location.href = 'register-login.html';
                         return;
                     }
-                    throw new Error('Postlarni yuklab bo\'lmadi');
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
             } catch (error) {
-                console.error('Xatolik:', error);
-                // Xatolikni konsolda ko'rsatish uchun alert o'rniga console.log ishlatish, sahifa yangilanmasin
-                console.log('Postlarni yuklab bo\'lmadi: ', error.message);
+                console.error('Postlarni yuklashda xatolik:', error);
+                showError(true);
                 hasMore = false;
             } finally {
                 isLoading = false;
@@ -240,10 +258,20 @@
             loading.classList.toggle('hidden', !show);
         }
 
+        // Xatolik ko'rsatish
+        function showError(show) {
+            const errorMsg = document.getElementById('errorMessage');
+            errorMsg.classList.toggle('hidden', !show);
+        }
+
         // Postlarni animatsiya bilan ko'rsatish (stagger)
         async function displayPostsWithAnimation(postsToShow) {
             const container = document.getElementById('postsContainer');
             container.innerHTML = '';
+            if (postsToShow.length === 0) {
+                container.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Postlar topilmadi.</p>';
+                return;
+            }
             for (let i = 0; i < postsToShow.length; i++) {
                 await new Promise(resolve => setTimeout(resolve, 100)); // Kichik delay
                 appendPostWithAnimation(postsToShow[i], i);
@@ -273,23 +301,25 @@
         function createPostElement(post) {
             const postElement = document.createElement('div');
             postElement.className = 'post-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in-up';
+            const isLiked = post.likes.includes(currentUser._id); // Tuzatildi: currentUser._id
             postElement.innerHTML = `
                 <div class="post-header flex items-center gap-3 p-4 bg-gradient-to-r from-navy-gold-50 to-silver">
                     <img src="/uploads/avatars/${post.author.profile.avatar || 'default.png'}" 
                          alt="Avatar" class="avatar w-10 h-10 rounded-full object-cover cursor-pointer hover:scale-105 transition-transform"
+                         onerror="this.src='https://via.placeholder.com/40?text=User'" // Fallback rasm
                          onclick="viewProfile('${post.author._id}')">
                     <div>
                         <h4 class="font-semibold text-charcoal">${post.author.profile.firstName} ${post.author.profile.lastName}</h4>
                         <small class="text-navy-gold-600">@${post.author.username}</small>
                     </div>
                 </div>
-                ${post.image ? `<img src="/uploads/posts/${post.image}" class="post-image w-full h-48 object-cover cursor-pointer hover:brightness-105 transition-all">` : ''}
+                ${post.image ? `<img src="/uploads/posts/${post.image}" class="post-image w-full h-48 object-cover cursor-pointer hover:brightness-105 transition-all" onerror="this.style.display='none'">` : ''}
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-charcoal mb-2">${post.title}</h3>
                     <p class="text-gray-600 mb-4 line-clamp-3">${post.content}</p>
                     <div class="post-actions flex gap-4 mb-3">
-                        <button onclick="toggleLike('${post._id}')" class="like-btn flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 ${post.likes.includes(currentUser.id) ? 'bg-red-100 text-red-500 shadow-md' : 'text-navy-gold-600 hover:text-red-500 hover:bg-red-50'}">
-                            <svg class="w-5 h-5 ${post.likes.includes(currentUser.id) ? 'fill-red-500' : 'fill-none stroke-current'}" stroke-width="2" viewBox="0 0 24 24">
+                        <button onclick="toggleLike('${post._id}')" class="like-btn flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 ${isLiked ? 'bg-red-100 text-red-500 shadow-md' : 'text-navy-gold-600 hover:text-red-500 hover:bg-red-50'}">
+                            <svg class="w-5 h-5 ${isLiked ? 'fill-red-500' : 'fill-none stroke-current'}" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                             </svg>
                             <span class="font-medium">${post.likes.length}</span>
@@ -329,21 +359,27 @@
                 
                 if (response.ok) {
                     const result = await response.json();
+                    console.log('Like natijasi:', result); // Debug
                     await loadPosts(currentPage, searchTerm, categoryFilter, currentPage > 1); // Yangilash
                 } else if (response.status === 401) {
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
                     window.location.href = 'register-login.html';
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
                 }
             } catch (error) {
-                console.error('Xatolik:', error);
+                console.error('Like bosishda xatolik:', error);
             }
         }
 
         // Kommentariyalarni ko'rsatish
         async function showComments(postId) {
             const post = posts.find(p => p._id === postId);
-            if (!post) return;
+            if (!post) {
+                console.error('Post topilmadi:', postId);
+                return;
+            }
 
             const modal = document.getElementById('postModal');
             const details = document.getElementById('postDetails');
@@ -353,13 +389,14 @@
                     <div class="post-header flex items-center gap-3 p-4 bg-gradient-to-r from-navy-gold-50 to-silver mb-4 rounded-lg">
                         <img src="/uploads/avatars/${post.author.profile.avatar || 'default.png'}" 
                              alt="Avatar" class="avatar w-12 h-12 rounded-full object-cover cursor-pointer hover:scale-105"
+                             onerror="this.src='https://via.placeholder.com/48?text=User'"
                              onclick="viewProfile('${post.author._id}')">
                         <div>
                             <h4 class="font-semibold text-charcoal text-lg">${post.author.profile.firstName} ${post.author.profile.lastName}</h4>
                             <small class="text-navy-gold-600">@${post.author.username}</small>
                         </div>
                     </div>
-                    ${post.image ? `<img src="/uploads/posts/${post.image}" class="post-image w-full h-64 object-cover rounded-lg mb-4 cursor-pointer hover:brightness-105">` : ''}
+                    ${post.image ? `<img src="/uploads/posts/${post.image}" class="post-image w-full h-64 object-cover rounded-lg mb-4 cursor-pointer hover:brightness-105" onerror="this.style.display='none'">` : ''}
                     <h3 class="text-2xl font-bold text-charcoal mb-3">${post.title}</h3>
                     <p class="text-gray-700 mb-6 leading-relaxed">${post.content}</p>
                     
@@ -375,6 +412,7 @@
                                     <div class="comment-header flex items-center gap-3 mb-2">
                                         <img src="/uploads/avatars/${comment.user.profile.avatar || 'default.png'}" 
                                              alt="Avatar" class="avatar-small w-8 h-8 rounded-full object-cover cursor-pointer"
+                                             onerror="this.src='https://via.placeholder.com/32?text=U'"
                                              onclick="viewProfile('${comment.user._id}')">
                                         <div>
                                             <strong class="text-charcoal">${comment.user.profile.firstName} ${comment.user.profile.lastName}</strong>
@@ -385,18 +423,19 @@
                                     <button onclick="showReplyForm('${post._id}', '${comment._id}')" class="text-navy-gold-600 hover:text-navy-gold-700 text-sm font-medium transition-colors">Javob berish</button>
                                     
                                     <div class="replies mt-4 ml-8 space-y-2">
-                                        ${comment.replies.map(reply => `
+                                        ${comment.replies ? comment.replies.map(reply => `
                                             <div class="reply bg-gray-50 p-3 rounded-md">
                                                 <div class="comment-header flex items-center gap-2 mb-1">
                                                     <img src="/uploads/avatars/${reply.user.profile.avatar || 'default.png'}" 
                                                          alt="Avatar" class="avatar-small w-6 h-6 rounded-full object-cover cursor-pointer"
+                                                         onerror="this.src='https://via.placeholder.com/24?text=U'"
                                                          onclick="viewProfile('${reply.user._id}')">
                                                     <strong class="text-sm text-charcoal">${reply.user.profile.firstName} ${reply.user.profile.lastName}</strong>
                                                     <small class="text-gray-500 text-xs">${new Date(reply.createdAt).toLocaleDateString()}</small>
                                                 </div>
                                                 <p class="text-sm text-gray-700">${reply.text}</p>
                                             </div>
-                                        `).join('')}
+                                        `).join('') : ''}
                                     </div>
                                     
                                     <div id="replyForm-${comment._id}" class="reply-form mt-3 hidden flex gap-2">
@@ -463,16 +502,20 @@
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
                     window.location.href = 'register-login.html';
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
                 }
             } catch (error) {
-                console.error('Xatolik:', error);
+                console.error('Kommmentariya qo\'shishda xatolik:', error);
             }
         }
 
         // Javob formasi
         function showReplyForm(postId, commentId) {
             const form = document.getElementById(`replyForm-${commentId}`);
-            form.classList.toggle('hidden');
+            if (form) {
+                form.classList.toggle('hidden');
+            }
         }
 
         // Javob qo'shish
@@ -499,9 +542,11 @@
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
                     window.location.href = 'register-login.html';
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
                 }
             } catch (error) {
-                console.error('Xatolik:', error);
+                console.error('Javob qo\'shishda xatolik:', error);
             }
         }
 
@@ -574,6 +619,8 @@
                 const post = posts.find(p => p._id === postId);
                 if (post) {
                     showComments(postId);
+                } else {
+                    console.error('URL dan post topilmadi:', postId);
                 }
             })();
         }
